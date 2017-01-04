@@ -1,5 +1,5 @@
 #'x' is the column of a data.frame that holds 2 digit state codes
-stateFromLower <-function(x) {
+stateFromLower <-function(x, rev=FALSE) {
   #read 52 state codes into local variable [includes DC (Washington D.C. and PR (Puerto Rico)]
   st.codes<-data.frame(
     state=as.factor(c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA",
@@ -18,12 +18,20 @@ stateFromLower <-function(x) {
                      "utah","virginia","vermont","washington","wisconsin",
                      "west virginia","wyoming"))
   )
+  if(rev==FALSE){
   #create an nx1 data.frame of state codes from source column
   st.x<-data.frame(state=x)
   #match source codes with codes from 'st.codes' local variable and use to return the full state name
   refac.x<-st.codes$full[match(st.x$state,st.codes$state)]
+  } else {
+    st.x<-data.frame(full=x)
+    #match source codes with codes from 'st.codes' local variable and use to return the full state name
+    refac.x<-st.codes$state[match(st.x$full,st.codes$full)]
+  }
+
   #return the full state names in the same order in which they appeared in the original source
   return(refac.x)
+  
   
 }
 
